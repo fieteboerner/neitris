@@ -18,6 +18,7 @@
 #
 
 from neitris_data import *
+from neitris_cfg import *
 import neitris_utils
 import random
 import copy
@@ -352,7 +353,13 @@ class Matrix:
             drawset = dots
         else:
             drawset = bricks
-            
+
+        if SHOW_GRID:
+            for j in range(2, XMAX-1):
+                pygame.draw.line(screen, (80, 80, 80), [IMGX*j, 0], [IMGX*j, IMGY * YMAX])
+            for j in range(1, YMAX-1):
+                pygame.draw.line(screen, (80, 80, 80), [0, IMGY*j], [IMGX * XMAX, IMGY * j])
+
         for j in range(YMAX):
             for i in range(XMAX):
                 if(self.matrix[j][i]):
