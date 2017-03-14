@@ -543,8 +543,8 @@ def neitris_main_loop(rq, wq):
         
             
                 # Generate and destroy powerups in the matrix
-            
-                players[playerid].GeneratePowerup()
+                if GENERATE_POWERUPS:
+                    players[playerid].GeneratePowerup()
        
 
         # Process Cleared (i.e. from the matrix) Powerups
