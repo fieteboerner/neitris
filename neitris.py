@@ -138,6 +138,9 @@ tick = 0
 pygame.time.set_timer(pygame.USEREVENT, 10)
 
 speed = [9, 13, 15, 20, 25, 30, 40, 50, 70, 100]
+if MAXLEVEL:
+    speed = map(lambda x: max([x, speed[10-MAXLEVEL]]), speed)
+
 count = 0
 lines = 0
 
