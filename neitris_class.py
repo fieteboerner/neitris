@@ -789,8 +789,9 @@ class Matrix:
         # Check whether a tetris has been done
         if donatorlines >= 4:
             data = struct.pack("B", TETRIS)
+            vic = self.victim if self.victim != -1 else 255
             msg = neitris_utils.MsgPack(
-                neitris_utils.POWERUP, data, self.victim, self.pid)
+                neitris_utils.POWERUP, data, vic, self.pid)
             if self.victim != -1:
                 wqueue.put_nowait(msg)
                 print "Sent TETRIS to player", self.victim
