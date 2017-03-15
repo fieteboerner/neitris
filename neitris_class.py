@@ -71,16 +71,16 @@ class Matrix:
         coeff = 0.0
         
         for i in powerups:
-            if i != DONATORRCVD and i != TETRIS:
+            if i != DONATORRCVD and i != DOUBLE and i != THREESOME and i != TETRIS:
                 coeff = coeff + powerups[i].prob
         coeff = 100 / (coeff)
 
         for i in powerups:
-            if i != DONATORRCVD and i != TETRIS:
+            if i != DONATORRCVD and i != DOUBLE and i != THREESOME and i != TETRIS:
                 powerups[i].prob = int(powerups[i].prob * coeff * 10)
         #print "Normalized Powerup Probabilities:"
         for i in powerups:
-            if i != DONATORRCVD and i != TETRIS:
+            if i != DONATORRCVD and i != DOUBLE and i != THREESOME and i != TETRIS:
                 print i, ": ", powerups[i].prob
             
         for i in range(1000):
@@ -90,7 +90,7 @@ class Matrix:
 
         i = 0
         for p in powerups:
-            if p != DONATORRCVD and p != TETRIS:
+            if p != DONATORRCVD and p != DOUBLE and p != THREESOME and p != TETRIS:
                 for j in range(powerups[p].prob):
                     self.pup_rnd_list[i] = p
                     i = i + 1
@@ -787,47 +787,71 @@ class Matrix:
             del self.powerups_active[SWAPSCR]
 
         # Check whether a tetris has been done
-        if donatorlines >= 4:
-            data = struct.pack("B", TETRIS)
+        if donatorlines >= 2:
+            if donatorlines >= 4:
+                action = "TETRIS"
+                data = struct.pack("B", TETRIS)
+            elif donatorlines == 3:
+                action = "THREESOME"
+                data = struct.pack("B", THREESOME)
+            else:
+                action = "DOUBLE"
+                data = struct.pack("B", DOUBLE)
+
             vic = self.victim if self.victim != -1 else 255
             msg = neitris_utils.MsgPack(
                 neitris_utils.POWERUP, data, vic, self.pid)
             if self.victim != -1:
                 wqueue.put_nowait(msg)
-                print "Sent TETRIS to player", self.victim
+                print "Sent " + action + " to player", self.victim
 
-        # Check whether a tetris has been received
+        # Check whether a double, threesome or tetris has been received
+        if DOUBLE in self.powerups_active:
+
+            self.PutRandomLines(1)
+            del self.powerups_active[DOUBLE]
+
+        if THREESOME in self.powerups_active:
+
+            self.PutRandomLines(2)
+            del self.powerups_active[THREESOME]
+
         if TETRIS in self.powerups_active:
 
-            # find the first empty line
-            k=YMAX-2
-            for i in range(YMAX-2, 0, -1):
-                found = 1
-                for j in range(1, XMAX-1):
-                    if self.matrix[i][j]!=0 and self.matrix[i][j]!=FALLING:
-                        found = 0
-                        break
-                if found:
-                    break
-                k = k-1
-            print "empty line found at ", k
-            # now put two lines there
-            self.PutRandomLines(k-1, 2)
+            self.PutRandomLines(3)
             del self.powerups_active[TETRIS]
             
             
                 
          
-    def PutRandomLines(self, pos, lines):
-        for i in range(pos, pos + lines):
-            emptyspot = random.randint(1, XMAX-2)
-            linecolor = random.randint(1,7)
-                           
+    def PutRandomLines(self, lines):
+        # move all lines up
+        for i in range(lines, YMAX-1):
             for j in range(1, XMAX-1):
-                if self.matrix[i][j] == FALLING:
+                # if a block will be set to a falling brick -> stop brick
+                if self.matrix[i][j] == FALLING and self.matrix[i-lines][j] > 0:
                     self.get_newshape = 1
-                if j != emptyspot:
-                    self.matrix[i][j] = linecolor
+                if self.matrix[i][j] != FALLING and self.matrix[i-lines][j] != FALLING:
+                    self.matrix[i-lines][j] = self.matrix[i][j]
+        # fill bottom lines
+        for i in range(YMAX-1-lines, YMAX-1):
+            emptyspots = [random.randint(1, XMAX-2), random.randint(1, XMAX-2), random.randint(1, XMAX-2)]
+            for j in range(1, XMAX-1):
+                if j in emptyspots:
+                    self.matrix[i][j] = 0
+                elif self.matrix[i][j] == FALLING:
+                    self.get_newshape = 1
+                else:
+                    self.matrix[i][j] = random.randint(1,7)
+        # for i in range(pos, pos + lines):
+        #     emptyspot = random.randint(1, XMAX-2)
+        #     linecolor = random.randint(1,7)
+
+        #     for j in range(1, XMAX-1):
+        #         if self.matrix[i][j] == FALLING:
+        #             self.get_newshape = 1
+        #         if j != emptyspot:
+        #             self.matrix[i][j] = linecolor
                         
 
             

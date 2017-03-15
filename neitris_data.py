@@ -396,6 +396,20 @@ donatorrcvd_pup.name = "donatorrcvd"
 donatorrcvd_pup.vis = 0
 DONATORRCVD = donatorrcvd_pup.pid
 
+double_pup = Powerup()
+double_pup.pid = 252
+double_pup.count = 0
+double_pup.name = "double"
+double_pup.vis = 0
+DOUBLE = double_pup.pid
+
+threesome_pup = Powerup()
+threesome_pup.pid = 253
+threesome_pup.count = 0
+threesome_pup.name = "threesome"
+threesome_pup.vis = 0
+THREESOME = threesome_pup.pid
+
 tetris_pup = Powerup()
 tetris_pup.pid = 254
 tetris_pup.count = 0
@@ -418,6 +432,8 @@ powerups[SWAPSCR] = swapscr_pup
 powerups[UPDOWN] = updown_pup
 powerups[DONATOR] = donator_pup
 powerups[DONATORRCVD] = donatorrcvd_pup
+powerups[DOUBLE] = double_pup
+powerups[THREESOME] = threesome_pup
 powerups[TETRIS] = tetris_pup
 powerups[DOTTER] = dotter_pup
 
