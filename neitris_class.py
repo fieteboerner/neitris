@@ -835,7 +835,9 @@ class Matrix:
                     self.matrix[i-lines][j] = self.matrix[i][j]
         # fill bottom lines
         for i in range(YMAX-1-lines, YMAX-1):
-            emptyspots = [random.randint(1, XMAX-2), random.randint(1, XMAX-2), random.randint(1, XMAX-2)]
+            emptyspots = [random.randint(1, XMAX-2)]
+            if random.randint(0, 1) == 0:
+                emptyspots.append(random.randint(1, XMAX-2))
             for j in range(1, XMAX-1):
                 if j in emptyspots:
                     self.matrix[i][j] = 0
