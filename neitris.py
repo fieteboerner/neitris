@@ -48,76 +48,24 @@ screen = None
 background = None
 DONE=0
 
+def LoadTheme(name):
+    bricks = []
+    # load brick images
+    for i in range(1, 8):
+        path = os.path.join(".","themes", name, "brick%d.bmp" % i)
+        bricks.append(pygame.image.load(path))
 
+    # load powerup brick images
+    for i in ['antidote', 'escalator', 'zed', 'reversekeys', 'rabbit', 'turtle', 'crystalball', 'clearscr', 'donator', 'swapscr', 'updown', 'dotter']:
+        path = os.path.join(".","powerups", "%s.bmp" % i)
+        bricks.append(pygame.image.load(path))
 
-brick1_name = os.path.join(".","brick1.bmp")
-brick2_name = os.path.join(".","brick2.bmp")
-brick3_name = os.path.join(".","brick3.bmp")
-brick4_name = os.path.join(".","brick4.bmp")
-brick5_name = os.path.join(".","brick5.bmp")
-brick6_name = os.path.join(".","brick6.bmp")
-brick7_name = os.path.join(".","brick7.bmp")
+    return bricks
 
-dot1_name = os.path.join(".","dot1.bmp")
-dot2_name = os.path.join(".","dot2.bmp")
-dot3_name = os.path.join(".","dot3.bmp")
-dot4_name = os.path.join(".","dot4.bmp")
-dot5_name = os.path.join(".","dot5.bmp")
-dot6_name = os.path.join(".","dot6.bmp")
-dot7_name = os.path.join(".","dot7.bmp")
-
-escalator_name = os.path.join(".","escalator.bmp")
-zed_name = os.path.join(".","zed.bmp")
-antidote_name = os.path.join(".","antidote.bmp")
-reversekeys_name = os.path.join(".","reversekeys.bmp")
-clearscr_name = os.path.join(".","clearscr.bmp")
-crystalball_name = os.path.join(".","crystalball.bmp")
-rabbit_name = os.path.join(".","rabbit.bmp")
-turtle_name = os.path.join(".","turtle.bmp")
-swapscr_name = os.path.join(".","swapscr.bmp")
-donator_name = os.path.join(".","donator.bmp")
-updown_name = os.path.join(".","updown.bmp")
-dotter_name = os.path.join(".","dotter.bmp")
-
-escalator = pygame.image.load(escalator_name)
-zed = pygame.image.load(zed_name)
-antidote = pygame.image.load(antidote_name)
-reversekeys = pygame.image.load(reversekeys_name)
-clearscr = pygame.image.load(clearscr_name)
-crystalball = pygame.image.load(crystalball_name)
-rabbit = pygame.image.load(rabbit_name)
-turtle = pygame.image.load(turtle_name)
-swapscr = pygame.image.load(swapscr_name)
-donator = pygame.image.load(donator_name)
-updown = pygame.image.load(updown_name)
-dotter = pygame.image.load(dotter_name)
-
-brick1 = pygame.image.load(brick1_name)
-brick2 = pygame.image.load(brick2_name)
-brick3 = pygame.image.load(brick3_name)
-brick4 = pygame.image.load(brick4_name)
-brick5 = pygame.image.load(brick5_name)
-brick6 = pygame.image.load(brick6_name)
-brick7 = pygame.image.load(brick7_name)
-
-dot1 = pygame.image.load(dot1_name)
-dot2 = pygame.image.load(dot2_name)
-dot3 = pygame.image.load(dot3_name)
-dot4 = pygame.image.load(dot4_name)
-dot5 = pygame.image.load(dot5_name)
-dot6 = pygame.image.load(dot6_name)
-dot7 = pygame.image.load(dot7_name)
-
-
-bricks = [brick1, brick2, brick3, brick4, brick5, brick6, brick7,
-          antidote, escalator, zed, reversekeys, rabbit, turtle,
-          crystalball, clearscr, donator, swapscr, updown, dotter]
-
-    
-dots = [dot1, dot2, dot3, dot4, dot5, dot6, dot7,
-          antidote, escalator, zed, reversekeys, rabbit, turtle,
-          crystalball, clearscr, donator, swapscr, updown, dotter]
-
+if 'THEME' not in globals():
+    THEME = 'neitris'
+bricks = LoadTheme(THEME)
+dots = LoadTheme('dot')
 
 #matrix = neitris_class.Matrix(0,0)
 
@@ -155,6 +103,7 @@ send_last_update = 0
 playerid = 0
 
 donatorlines = 0
+
 
 def EndGame():
     global State
