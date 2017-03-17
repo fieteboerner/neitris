@@ -52,12 +52,12 @@ def LoadTheme(name):
     bricks = []
     # load brick images
     for i in range(1, 8):
-        path = os.path.join(".","themes", name, "brick%d.bmp" % i)
+        path = os.path.join(".","themes", name, "brick%d.png" % i)
         bricks.append(pygame.image.load(path))
 
     # load powerup brick images
     for i in ['antidote', 'escalator', 'zed', 'reversekeys', 'rabbit', 'turtle', 'crystalball', 'clearscr', 'donator', 'swapscr', 'updown', 'dotter']:
-        path = os.path.join(".","powerups", "%s.bmp" % i)
+        path = os.path.join(".","powerups", "%s.png" % i)
         bricks.append(pygame.image.load(path))
 
     return bricks
