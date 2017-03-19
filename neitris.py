@@ -426,7 +426,7 @@ def neitris_main_loop(rq, wq):
     background = background.convert()
     background.fill(theme.backgroundColor)
 
-    font = pygame.font.Font(None, 25)
+    font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
 
     text = font.render("Press START to start game", 1, (140, 140, 140))
     textpos = text.get_rect()

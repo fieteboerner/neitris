@@ -17,6 +17,8 @@
 #    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 #
 
+from neitris_cfg import *
+
 class Curshape:
     pass
 
@@ -34,8 +36,8 @@ MAX_SHAPES = 7
 XMAX = 12
 YMAX = 31
 
-IMGX = 15
-IMGY = 15
+IMGX = int(15 * SCALE_FACTOR)
+IMGY = int(15 * SCALE_FACTOR)
 
 POWERUP_MIN = 230
 POWERUP_MAX = 250

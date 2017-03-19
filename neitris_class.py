@@ -415,14 +415,14 @@ class Matrix:
         # Create text
 
         # Create player's name
-        font = pygame.font.Font(None, 25)
+        font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
         text = font.render("%s" % (self.name), 1, theme.textColor, theme.backgroundColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+50, self.srcy + theme.get_matrix_height() + 5))
+        screen.blit(text, (self.srcx+50, self.srcy + theme.get_matrix_height() + int(5 * SCALE_FACTOR)))
         # Create victim's name
-        font = pygame.font.Font(None, 20)
+        font = pygame.font.Font(None, int(20 * SCALE_FACTOR))
         if self.victim == -1:
             str = "Victim: Nobody"
         else:
@@ -432,17 +432,17 @@ class Matrix:
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+20, self.srcy + theme.get_matrix_height() + 40))
+        screen.blit(text, (self.srcx + 20, self.srcy + theme.get_matrix_height() + int(40 * SCALE_FACTOR)))
 
         # Display won games and speed
-        font = pygame.font.Font(None, 20)
+        font = pygame.font.Font(None, int(20 * SCALE_FACTOR))
         str = "Wins: %d    Speed: %d" % (self.victories, 10 - self.speedidx)
             
         text = font.render(str, 1, theme.textColor, theme.backgroundColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+20, self.srcy + theme.get_matrix_height() + 60))
+        screen.blit(text, (self.srcx + 20, self.srcy + theme.get_matrix_height() + int(60 * SCALE_FACTOR)))
 
     def GetMatrixStream(self):
         self.PutShape_color(self.curshape.y, self.curshape.x,
