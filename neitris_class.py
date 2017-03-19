@@ -19,6 +19,7 @@
 
 from neitris_data import *
 from neitris_cfg import *
+from neitris_theme_loader import ThemeLoader
 import neitris_utils
 import random
 import copy
@@ -26,6 +27,8 @@ import zlib
 import pygame
 
 import struct
+
+theme = ThemeLoader(THEME)
 
 class Matrix:
 
@@ -36,11 +39,11 @@ class Matrix:
                 self.matrix[i][j] = 0;
 
         for i in range(YMAX):
-            self.matrix[i][0] = 7;
-            self.matrix[i][XMAX-1] = 7;
+            self.matrix[i][0] = theme.borderBrick
+            self.matrix[i][XMAX-1] = theme.borderBrick
 
         for j in range(XMAX):
-            self.matrix[YMAX-1][j] = 7;
+            self.matrix[YMAX-1][j] = theme.borderBrick
 
         self.curshape = Curshape();
         self.curshape.y = -1
@@ -413,11 +416,11 @@ class Matrix:
 
         # Create player's name
         font = pygame.font.Font(None, 25)
-        text = font.render("%s" % (self.name), 1, (244, 255, 29), (0,0,0))
+        text = font.render("%s" % (self.name), 1, theme.textColor, theme.backgroundColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+50, self.srcy+470))
+        screen.blit(text, (self.srcx+50, self.srcy + theme.get_matrix_height() + 5))
         # Create victim's name
         font = pygame.font.Font(None, 20)
         if self.victim == -1:
@@ -425,21 +428,21 @@ class Matrix:
         else:
             str = "Victim: %s" % (players[self.victim].name)
         
-        text = font.render(str, 1, (255, 24, 24), (0,0,0))
+        text = font.render(str, 1, theme.textColor, theme.backgroundColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+20, self.srcy+540))
+        screen.blit(text, (self.srcx+20, self.srcy + theme.get_matrix_height() + 40))
 
         # Display won games and speed
         font = pygame.font.Font(None, 20)
         str = "Wins: %d    Speed: %d" % (self.victories, 10 - self.speedidx)
             
-        text = font.render(str, 1, (255, 24, 24), (0,0,0))
+        text = font.render(str, 1, theme.textColor, theme.backgroundColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
-        screen.blit(text, (self.srcx+20, self.srcy+560))
+        screen.blit(text, (self.srcx+20, self.srcy + theme.get_matrix_height() + 60))
 
     def GetMatrixStream(self):
         self.PutShape_color(self.curshape.y, self.curshape.x,

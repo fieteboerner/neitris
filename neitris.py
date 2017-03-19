@@ -19,6 +19,7 @@
 #
 import thread
 from neitris_cfg import *
+from neitris_theme_loader import ThemeLoader
 import neitris_class
 import neitris_utils
 import copy
@@ -29,16 +30,13 @@ import struct
 import zlib
 from socket import socket, AF_INET, SOCK_STREAM
 import time
-import pygame, sys,os, pickle
+import pygame, sys, os, pickle
 from pygame.locals import *
 
-
-    
 PORT = 7777
 
 rqueue = Queue()
 wqueue = Queue()
-
 
 State = "Idle"
 
@@ -48,24 +46,11 @@ screen = None
 background = None
 DONE=0
 
-def LoadTheme(name):
-    bricks = []
-    # load brick images
-    for i in range(1, 8):
-        path = os.path.join(".","themes", name, "brick%d.png" % i)
-        bricks.append(pygame.image.load(path))
+theme = ThemeLoader(THEME)
+bricks = theme.get_bricks()
 
-    # load powerup brick images
-    for i in ['antidote', 'escalator', 'zed', 'reversekeys', 'rabbit', 'turtle', 'crystalball', 'clearscr', 'donator', 'swapscr', 'updown', 'dotter']:
-        path = os.path.join(".","powerups", "%s.png" % i)
-        bricks.append(pygame.image.load(path))
-
-    return bricks
-
-if 'THEME' not in globals():
-    THEME = 'neitris'
-bricks = LoadTheme(THEME)
-dots = LoadTheme('dot')
+#dotTheme = ThemeLoader('dot')
+dots = bricks #dotTheme.get_bricks()
 
 #matrix = neitris_class.Matrix(0,0)
 
@@ -111,19 +96,19 @@ def EndGame():
     global playerid
     global wqueue
     global send_last_update
-    
+
     State = "Idle"
     print "GAME IS OVER!!!!"
     print "sent %d bytes,%d times, %d bytes/time avg\n" % \
           (sent_bytes, sent_times, sent_bytes / sent_times)
-    
+
     print "sent_min: %d, sent_max: %d\n" % (sent_min, sent_max)
 
     msg = neitris_utils.MsgPack(neitris_utils.GAMEOVER, "", 0, playerid)
     wqueue.put_nowait(msg)
     send_last_update = 1
-    
-    
+
+
 def input(events, matrix):
     global State
     global speed, count, lines
@@ -139,9 +124,9 @@ def input(events, matrix):
     global TICKEVENT
 
     curlines = 0
-    
-    for event in events: 
-        if event.type == QUIT: 
+
+    for event in events:
+        if event.type == QUIT:
             sys.exit(0)
         elif  event.type == KEYDOWN and event.key == KEY_START \
                  and State == "Idle":
@@ -160,7 +145,7 @@ def input(events, matrix):
             State = "Playing"
             count = 0
             lines = 0
-           
+
             state_change = 1
 
             sent_bytes = 0
@@ -173,12 +158,12 @@ def input(events, matrix):
             #    if p != playerid:
             ###        players[playerid].victim = p
             #      break
-            players[playerid].ChangeVictim("init")  
+            players[playerid].ChangeVictim("init")
             print "Initial Victim is player nr ", players[playerid].victim
-                
-            
+
+
             print "Game is starting"
-            
+
         elif State == "Playing":
 
             if ( (event.type == USEREVENT and \
@@ -187,12 +172,12 @@ def input(events, matrix):
 
                 count = 0
                 state_change = 1
-                
+
                 if matrix.MoveDown()==0:
                     curlines = curlines + matrix.ClearCompleted()
-                
+
                     #print "cleared lines: ", lines
-                        
+
                     if(matrix.NewShape()==0):
                         EndGame()
                         pygame.time.set_timer(TICKEVENT, 0)
@@ -223,17 +208,17 @@ def input(events, matrix):
                     matrix.Drop()
                     curlines = curlines + matrix.ClearCompleted()
                     #print "cleared lines: ", lines
-                    
+
                     if(matrix.NewShape()==0):
                         EndGame()
                 elif event.key == KEY_USEANTIDOTE:
                     players[playerid].UseAntidote()
                 elif event.key == KEY_VICTIM:
                     players[playerid].ChangeVictim("normal")
-                    
+
                 state_change = 1
-            
-            
+
+
     lines = lines + curlines
     donatorlines = donatorlines + curlines
     return
@@ -247,7 +232,7 @@ def ProcessMsg(rqueue):
     global State
     global wqueue
     global screen, background
-    
+
     while not rqueue.empty():
 
         msg = rqueue.get_nowait()
@@ -260,7 +245,7 @@ def ProcessMsg(rqueue):
 
             state_change = 1
             players[src].PutMatrixStream(data)
-                
+
         elif cmd == neitris_utils.GAMEINFO:
             print "Got GAMEINFO msg:", data
             (pnr,) = struct.unpack("B", data[0])
@@ -268,25 +253,21 @@ def ProcessMsg(rqueue):
             window = None
             screen = None
             #background = None
-            window = pygame.display.set_mode((250*pnr, 600))
+            window = pygame.display.set_mode((theme.get_window_width() * pnr, theme.get_window_height()))
             pygame.display.set_caption('Neitris')
 
-
             screen = pygame.display.get_surface()
-            #background = pygame.Surface(screen.get_size())
-            #background = background.convert()
-            #background.fill((0, 0, 0))
-            
+
             data = data[1:]
             if players[playerid] == None:
                 victories = 0
             else:
                 victories = players[playerid].victories
-            
+
             players={}
             for i in range(pnr):
                 (pid, length) = struct.unpack("!BH",data[:3])
-                playermatrix = neitris_class.Matrix(i*250,0)
+                playermatrix = neitris_class.Matrix(i * theme.get_window_width(), 0)
                 playermatrix.pid = pid
                 playermatrix.name = data[3:(length+3)]
                 playermatrix.active = 1
@@ -297,7 +278,7 @@ def ProcessMsg(rqueue):
             print "The following players are in the game: "
             players[playerid].player_list = []
             players[playerid].player_dict_active = {}
-            
+
             players[playerid].player_list.append(-1)
             players[playerid].player_dict_active[-1] = 1
             for i in players:
@@ -307,7 +288,7 @@ def ProcessMsg(rqueue):
                     players[playerid].player_dict_active[i] = 1
                 else:
                     players[playerid].player_dict_active[i] = 0
-                    
+
 
             #simply store the entire playrs dict into the player obj
             for i in players:
@@ -334,7 +315,7 @@ def ProcessMsg(rqueue):
 
                 players[playerid].player_dict_active[src] = 0
                 if players[playerid].victim == src:
-                    players[playerid].ChangeVictim("victimdied")                    
+                    players[playerid].ChangeVictim("victimdied")
 
         elif cmd == neitris_utils.INCRVICTS:
             print "You are the winner of this game"
@@ -346,10 +327,10 @@ def ProcessMsg(rqueue):
             msg = neitris_utils.MsgPack(neitris_utils.SENDSTATE, data, 0,
                                        playerid)
             wqueue.put_nowait(msg)
-          
+
             players[playerid].DrawMatrix(screen, bricks, dots, players,
                                          background)
-            pygame.display.flip()            
+            pygame.display.flip()
         elif cmd == neitris_utils.INCRSPEED:
             if players[playerid].speedidx != 0:
                 players[playerid].speedidx = players[playerid].speedidx - 1
@@ -371,7 +352,7 @@ def ProcessMsg(rqueue):
                     if State == "Playing" :
                         dataout = players[playerid].GetSwapData()
                         dataout = struct.pack("BB", 17, 1) + dataout
-                
+
                         msg = neitris_utils.MsgPack(
                             neitris_utils.POWERUP, dataout,
                             src, playerid)
@@ -380,11 +361,11 @@ def ProcessMsg(rqueue):
                 else: # received back others data
                     players[playerid].PutSwapData(data)
 
-                
-                
+
+
             else:
                 print "From player ", src, " got ", pupobj.name, " with id ", pupobj.pid
-            
+
             players[playerid].powerups_active[pup_id]=pupobj
 
 def neitris_main_loop(rq, wq):
@@ -402,13 +383,13 @@ def neitris_main_loop(rq, wq):
 
     global donatorlines
     global send_last_update
-    
+
     wqueue = wq
     rqueue = rq
-    
+
 
     flash_powerup = 0
-    
+
     # Initially, get user's name and sent it to server to register player
     playername=raw_input("enter a player name: ")
     msg = neitris_utils.MsgPack(neitris_utils.REGPLAYER, playername, 0, 0)
@@ -434,16 +415,16 @@ def neitris_main_loop(rq, wq):
 
     print "Registered with the Server, got id: ", playerid
     players[playerid] = None
-    
 
 
-    window = pygame.display.set_mode((250, 600))
+
+    window = pygame.display.set_mode((theme.get_window_width(), theme.get_window_height()))
     pygame.display.set_caption('Neitris')
 
     screen = pygame.display.get_surface()
     background = pygame.Surface(screen.get_size())
     background = background.convert()
-    background.fill((0, 0, 0))
+    background.fill(theme.backgroundColor)
 
     font = pygame.font.Font(None, 25)
 
@@ -454,31 +435,31 @@ def neitris_main_loop(rq, wq):
     textpos.centery = 270
 
     textsurf.blit(text, textpos)
-    screen.blit(textsurf, (0, 0))    
+    screen.blit(textsurf, (0, 0))
     pygame.display.flip()
 
 
-    
+
     while True:
         # Process Messages from the server and other clients
         ProcessMsg(rqueue)
 
         # Process events
-        input(pygame.event.get(), players[playerid])        
+        input(pygame.event.get(), players[playerid])
 
-        
+
         # periodically (10 times/sec) send updates to other clients
         if (delay == UPDATE_FREQ and State == "Playing") or \
               send_last_update == 1:
-            
+
             delay = 0
-            send_last_update = 0 
+            send_last_update = 0
             data = players[playerid].GetMatrixStream()
 
             #data = zlib.compress(data,9)
             l = len(data)
             sent_bytes = sent_bytes  + l
-            
+
             sent_times = sent_times + 1
 
             if l > sent_max:
@@ -492,24 +473,24 @@ def neitris_main_loop(rq, wq):
 
             if not send_last_update:
                 flash_powerup = players[playerid].MonitorPowerups()
-        
-            
+
+
                 # Generate and destroy powerups in the matrix
                 if GENERATE_POWERUPS:
                     players[playerid].GeneratePowerup()
-       
+
 
         # Process Cleared (i.e. from the matrix) Powerups
         if State == "Playing":
             players[playerid].ProcessClearedPowerups(wqueue)
             players[playerid].ProcessActivePowerups(donatorlines, wqueue)
             donatorlines = 0
-            
+
             if tick:
                 tick = 0
                 players[playerid].ProcessActivePowerupsTimed()
 
-            
+
 
         # Update Screen
         if state_change or flash_powerup:
@@ -517,17 +498,17 @@ def neitris_main_loop(rq, wq):
             for p in players:
                 #screen.blit(background, (players[p].srcx, 0))
                 players[p].DrawMatrix(screen, bricks, dots, players,
-                                      background)                
+                                      background)
             pygame.display.flip()
             state_change = 0
             flash_powerup = 0
-            
-                
-        
+
+
+
         pygame.time.wait(10)
-        
-        
-        
+
+
+
 
 def neitris_main():
     while 1:
@@ -540,13 +521,13 @@ def StartClient():
     thread.start_new(neitris_cli.ChatWrite, (7778, wqueue, readsock))
     time.sleep(0.5) # should remove this, not needed
     neitris_main()
-    
+
     return
 
 if __name__=="__main__":
     global readsock
     global HOSTNAME
-    
+
     print "Neitris Version 0.1beta, $Revision: 34 $"
     print "   Copyright (C) 2006 Alexandros Kostopoulos"
     print "\nNeitris comes with ABSOLUTELY NO WARRANTY. This is free software,"
@@ -558,7 +539,7 @@ if __name__=="__main__":
         HOSTNAME = raw_input()
         if HOSTNAME == "":
             HOSTNAME = "127.0.0.1"
-            
+
         print HOSTNAME
     else:
         HOSTNAME = sys.argv[1]
@@ -567,5 +548,5 @@ if __name__=="__main__":
     readsock.connect((HOSTNAME, PORT))
 #    readsock.send("<READ>")
     connected = 1
-    
+
     StartClient()
