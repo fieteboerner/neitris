@@ -30,9 +30,9 @@ class Rotation:
 class Powerup:
     pass
 
-MAX_SHAPES = 7;
-XMAX = 12;
-YMAX = 31;
+MAX_SHAPES = 7
+XMAX = 12
+YMAX = 31
 
 IMGX = 15
 IMGY = 15
@@ -47,51 +47,51 @@ POWERUP_FLASHING = 25 # time (in 100ms cycles) the powerup flashes before gone
 
 # z-left
 
-zleft = Shape();
+zleft = Shape()
 
-zleft.rot0 = Rotation();
-zleft.rot1 = Rotation();
+zleft.rot0 = Rotation()
+zleft.rot1 = Rotation()
 
-zleft.rots = [zleft.rot0, zleft.rot1];
+zleft.rots = [zleft.rot0, zleft.rot1]
 
-zleft.rot = 2;
-zleft.rots[0].height = 2;
-zleft.rots[0].width = 3;
+zleft.rot = 2
+zleft.rots[0].height = 2
+zleft.rots[0].width = 3
 zleft.rots[0].rotmat =[[1,1,0,0],
                        [0,1,1,0],
                        [0,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
-zleft.rots[1].height = 3;
-zleft.rots[1].width = 2;
+zleft.rots[1].height = 3
+zleft.rots[1].width = 2
 zleft.rots[1].rotmat =[[0,1,0,0],
                        [1,1,0,0],
                        [1,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
 # stick
 
-stick = Shape();
+stick = Shape()
 
-stick.rot0 = Rotation();
-stick.rot1 = Rotation();
+stick.rot0 = Rotation()
+stick.rot1 = Rotation()
 
-stick.rots = [stick.rot0, stick.rot1];
+stick.rots = [stick.rot0, stick.rot1]
 
-stick.rot = 2;
-stick.rots[0].height = 1;
-stick.rots[0].width = 4;
+stick.rot = 2
+stick.rots[0].height = 1
+stick.rots[0].width = 4
 stick.rots[0].rotmat =[[7,7,7,7],
                        [0,0,0,0],
                        [0,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
-stick.rots[1].height = 4;
-stick.rots[1].width = 2;
+stick.rots[1].height = 4
+stick.rots[1].width = 2
 stick.rots[1].rotmat =[[0,7,0,0],
                        [0,7,0,0],
                        [0,7,0,0],
-                       [0,7,0,0]];
+                       [0,7,0,0]]
 
 
 
@@ -99,169 +99,169 @@ stick.rots[1].rotmat =[[0,7,0,0],
 # square
 
 
-square = Shape();
+square = Shape()
 
-square.rot0 = Rotation();
+square.rot0 = Rotation()
 
-square.rots = [square.rot0];
+square.rots = [square.rot0]
 
-square.rot = 1;
-square.rots[0].height = 2;
-square.rots[0].width = 2;
+square.rot = 1
+square.rots[0].height = 2
+square.rots[0].width = 2
 square.rots[0].rotmat =[[2,2,0,0],
                         [2,2,0,0],
                         [0,0,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
 
 # taf
 
-taf = Shape();
+taf = Shape()
 
-taf.rot0 = Rotation();
-taf.rot1 = Rotation();
-taf.rot2 = Rotation();
-taf.rot3 = Rotation();
+taf.rot0 = Rotation()
+taf.rot1 = Rotation()
+taf.rot2 = Rotation()
+taf.rot3 = Rotation()
 
-taf.rots = [taf.rot0, taf.rot1, taf.rot2, taf.rot3];
+taf.rots = [taf.rot0, taf.rot1, taf.rot2, taf.rot3]
 
-taf.rot = 4;
-taf.rots[0].height = 2;
-taf.rots[0].width = 3;
+taf.rot = 4
+taf.rots[0].height = 2
+taf.rots[0].width = 3
 taf.rots[0].rotmat =[[3,3,3,0],
                      [0,3,0,0],
                      [0,0,0,0],
-                     [0,0,0,0]];
+                     [0,0,0,0]]
 
-taf.rots[1].height = 3;
-taf.rots[1].width = 2;
+taf.rots[1].height = 3
+taf.rots[1].width = 2
 taf.rots[1].rotmat =[[3,0,0,0],
                      [3,3,0,0],
                      [3,0,0,0],
-                     [0,0,0,0]];
+                     [0,0,0,0]]
 
-taf.rots[2].height = 2;
-taf.rots[2].width = 3;
+taf.rots[2].height = 2
+taf.rots[2].width = 3
 taf.rots[2].rotmat =[[0,3,0,0],
                      [3,3,3,0],
                      [0,0,0,0],
-                     [0,0,0,0]];
+                     [0,0,0,0]]
 
-taf.rots[3].height = 3;
-taf.rots[3].width = 2;
+taf.rots[3].height = 3
+taf.rots[3].width = 2
 taf.rots[3].rotmat =[[0,3,0,0],
                      [3,3,0,0],
                      [0,3,0,0],
-                     [0,0,0,0]];
+                     [0,0,0,0]]
 
 
 # gamma-left
 
-gleft = Shape();
+gleft = Shape()
 
-gleft.rot0 = Rotation();
-gleft.rot1 = Rotation();
-gleft.rot2 = Rotation();
-gleft.rot3 = Rotation();
+gleft.rot0 = Rotation()
+gleft.rot1 = Rotation()
+gleft.rot2 = Rotation()
+gleft.rot3 = Rotation()
 
-gleft.rots = [gleft.rot0, gleft.rot1, gleft.rot2, gleft.rot3];
+gleft.rots = [gleft.rot0, gleft.rot1, gleft.rot2, gleft.rot3]
 
-gleft.rot = 4;
-gleft.rots[0].height = 2;
-gleft.rots[0].width = 3;
+gleft.rot = 4
+gleft.rots[0].height = 2
+gleft.rots[0].width = 3
 gleft.rots[0].rotmat =[[4,4,4,0],
                        [0,0,4,0],
                        [0,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
-gleft.rots[1].height = 3;
-gleft.rots[1].width = 2;
+gleft.rots[1].height = 3
+gleft.rots[1].width = 2
 gleft.rots[1].rotmat =[[4,4,0,0],
                        [4,0,0,0],
                        [4,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
-gleft.rots[2].height = 2;
-gleft.rots[2].width = 3;
+gleft.rots[2].height = 2
+gleft.rots[2].width = 3
 gleft.rots[2].rotmat =[[4,0,0,0],
                        [4,4,4,0],
                        [0,0,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
-gleft.rots[3].height = 3;
-gleft.rots[3].width = 2;
+gleft.rots[3].height = 3
+gleft.rots[3].width = 2
 gleft.rots[3].rotmat =[[0,4,0,0],
                        [0,4,0,0],
                        [4,4,0,0],
-                       [0,0,0,0]];
+                       [0,0,0,0]]
 
 # gamme-right
 
-gright = Shape();
+gright = Shape()
 
-gright.rot0 = Rotation();
-gright.rot1 = Rotation();
-gright.rot2 = Rotation();
-gright.rot3 = Rotation();
+gright.rot0 = Rotation()
+gright.rot1 = Rotation()
+gright.rot2 = Rotation()
+gright.rot3 = Rotation()
 
-gright.rots = [gright.rot0, gright.rot1, gright.rot2, gright.rot3];
+gright.rots = [gright.rot0, gright.rot1, gright.rot2, gright.rot3]
 
-gright.rot = 4;
-gright.rots[0].height = 2;
-gright.rots[0].width = 3;
+gright.rot = 4
+gright.rots[0].height = 2
+gright.rots[0].width = 3
 gright.rots[0].rotmat =[[5,5,5,0],
                         [5,0,0,0],
                         [0,0,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
-gright.rots[1].height = 3;
-gright.rots[1].width = 2;
+gright.rots[1].height = 3
+gright.rots[1].width = 2
 gright.rots[1].rotmat =[[5,0,0,0],
                         [5,0,0,0],
                         [5,5,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
-gright.rots[2].height = 2;
-gright.rots[2].width = 3;
+gright.rots[2].height = 2
+gright.rots[2].width = 3
 gright.rots[2].rotmat =[[0,0,5,0],
                         [5,5,5,0],
                         [0,0,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
-gright.rots[3].height = 3;
-gright.rots[3].width = 2;
+gright.rots[3].height = 3
+gright.rots[3].width = 2
 gright.rots[3].rotmat =[[5,5,0,0],
                         [0,5,0,0],
                         [0,5,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
 
 # z-right
 
-zright = Shape();
+zright = Shape()
 
-zright.rot0 = Rotation();
-zright.rot1 = Rotation();
+zright.rot0 = Rotation()
+zright.rot1 = Rotation()
 
-zright.rots = [zright.rot0, zright.rot1];
+zright.rots = [zright.rot0, zright.rot1]
 
-zright.rot = 2;
-zright.rots[0].height = 2;
-zright.rots[0].width = 3;
+zright.rot = 2
+zright.rots[0].height = 2
+zright.rots[0].width = 3
 zright.rots[0].rotmat =[[0,6,6,0],
                         [6,6,0,0],
                         [0,0,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
-zright.rots[1].height = 3;
-zright.rots[1].width = 2;
+zright.rots[1].height = 3
+zright.rots[1].width = 2
 zright.rots[1].rotmat =[[6,0,0,0],
                         [6,6,0,0],
                         [0,6,0,0],
-                        [0,0,0,0]];
+                        [0,0,0,0]]
 
 
-shapes = [zleft, stick, square, taf, gleft, gright, zright];
+shapes = [zleft, stick, square, taf, gleft, gright, zright]
 
 antidote_pup = Powerup()
 antidote_pup.pid = POWERUP_MIN
