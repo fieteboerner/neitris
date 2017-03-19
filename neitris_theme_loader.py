@@ -18,6 +18,6 @@ class ThemeLoader(object):
             sys.path.append(os.path.join('.', 'themes', theme))
             tpl = __import__(theme + '_theme')
 
-            self.themes[theme] = tpl.Theme()
+            self.themes[theme] = tpl.Theme(theme)
 
         return self.themes[theme]

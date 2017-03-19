@@ -49,8 +49,8 @@ DONE=0
 theme = ThemeLoader(THEME)
 bricks = theme.get_bricks()
 
-#dotTheme = ThemeLoader('dot')
-dots = bricks #dotTheme.get_bricks()
+dotTheme = ThemeLoader('dot')
+dots = dotTheme.get_bricks()
 
 #matrix = neitris_class.Matrix(0,0)
 

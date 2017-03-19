@@ -5,7 +5,7 @@ import pygame
 
 class BaseTheme:
     # General
-    name = ''
+    name = None
 
     # Bricks
     bricks = {}
@@ -13,8 +13,12 @@ class BaseTheme:
     brickCount = 7
     brickWidth = IMGX
 
+    # Style
     backgroundColor = (0, 0, 0)
     textColor = (255, 255, 255)
+
+    def __init__(self, name):
+        self.name = name
 
     def get_bricks(self):
         if not len(self.bricks):
