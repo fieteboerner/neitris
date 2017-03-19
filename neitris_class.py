@@ -639,9 +639,10 @@ class Matrix:
                  pup.pid == CRYSTALBALL or pup.pid == UPDOWN or \
                  pup.pid == DOTTER: 
                 data = struct.pack("B", pup.pid)
-                msg = neitris_utils.MsgPack(
-                    neitris_utils.POWERUP, data, self.victim, self.pid)
                 if self.victim != -1:
+                    msg = neitris_utils.MsgPack(
+                        neitris_utils.POWERUP, data, self.victim, self.pid)
+
                     wqueue.put_nowait(msg)
                     print "Sent", pup.pid," to player ", self.victim
 
@@ -649,9 +650,9 @@ class Matrix:
                 data = self.GetSwapData()
                 data = struct.pack("BB", SWAPSCR,0) + data
                 
-                msg = neitris_utils.MsgPack(
-                    neitris_utils.POWERUP, data, self.victim, self.pid)
                 if self.victim != -1:
+                    msg = neitris_utils.MsgPack(
+                        neitris_utils.POWERUP, data, self.victim, self.pid)
                     wqueue.put_nowait(msg)
 
             elif pup.pid == TURTLE:
@@ -760,9 +761,9 @@ class Matrix:
         if DONATOR in self.powerups_active:
             if donatorlines > 0:
                 data = struct.pack("BB", DONATORRCVD, donatorlines )
-                msg = neitris_utils.MsgPack(
-                    neitris_utils.POWERUP, data, self.victim, self.pid)
                 if self.victim != -1:
+                    msg = neitris_utils.MsgPack(
+                        neitris_utils.POWERUP, data, self.victim, self.pid)
                     wqueue.put_nowait(msg)
                     print "Sent ", donatorlines, " by donator to player ", \
                           self.victim
@@ -801,10 +802,9 @@ class Matrix:
                 action = "DOUBLE"
                 data = struct.pack("B", DOUBLE)
 
-            vic = self.victim if self.victim != -1 else 255
-            msg = neitris_utils.MsgPack(
-                neitris_utils.POWERUP, data, vic, self.pid)
             if self.victim != -1:
+                msg = neitris_utils.MsgPack(
+                    neitris_utils.POWERUP, data, self.victim, self.pid)
                 wqueue.put_nowait(msg)
                 print "Sent " + action + " to player", self.victim
 
