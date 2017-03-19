@@ -778,7 +778,7 @@ class Matrix:
                 self.ShiftUp(YMAX-1)
 
                 emptyspot = random.randint(1, XMAX-2)
-                linecolor = random.randint(1,7)
+                linecolor = random.randint(1, theme.brickCount)
                  
                 for j in range(1, XMAX-1):
                     if j != emptyspot:
@@ -848,22 +848,8 @@ class Matrix:
                 elif self.matrix[i][j] == FALLING:
                     self.get_newshape = 1
                 else:
-                    self.matrix[i][j] = random.randint(1,7)
-        # for i in range(pos, pos + lines):
-        #     emptyspot = random.randint(1, XMAX-2)
-        #     linecolor = random.randint(1,7)
+                    self.matrix[i][j] = random.randint(1, theme.brickCount)
 
-        #     for j in range(1, XMAX-1):
-        #         if self.matrix[i][j] == FALLING:
-        #             self.get_newshape = 1
-        #         if j != emptyspot:
-        #             self.matrix[i][j] = linecolor
-                        
-
-            
-        
-                  
-            
     def ProcessActivePowerupsTimed(self):
         
         if ESCALATOR in self.powerups_active:
