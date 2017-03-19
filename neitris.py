@@ -300,7 +300,18 @@ def ProcessMsg(rqueue):
         elif cmd == neitris_utils.GAMESTART:
             data, = struct.unpack("B", data)
             if data > 0:
+                font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
 
+                text = font.render("%i" % data, 1, theme.textColor, theme.backgroundColor)
+                textpos = text.get_rect()
+                textsurf = pygame.Surface(screen.get_size())
+                textsurf.fill(theme.backgroundColor)
+                textpos.centerx = textsurf.get_rect().centerx
+                textpos.centery = 270
+
+                textsurf.blit(text, textpos)
+                screen.blit(textsurf, (0, 0))
+                pygame.display.update()
                 print "Counting: ", data
             else:
                 print "GO!!!"
