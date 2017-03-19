@@ -21,6 +21,7 @@ from neitris_data import *
 from neitris_cfg import *
 from neitris_theme_loader import ThemeLoader
 import neitris_utils
+import sys
 import random
 import copy
 import zlib
