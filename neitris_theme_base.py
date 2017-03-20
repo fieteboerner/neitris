@@ -15,7 +15,9 @@ class BaseTheme:
 
     # Style
     backgroundColor = (0, 0, 0)
+    matrixBackgroundColor = (20, 20, 20)
     textColor = (255, 255, 255)
+    gridColor = (80, 80, 80)
 
     def __init__(self, name):
         self.name = name

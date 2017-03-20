@@ -358,11 +358,13 @@ class Matrix:
         else:
             drawset = bricks
 
+        pygame.draw.rect(screen, theme.matrixBackgroundColor, (self.srcx, self.srcy, theme.get_matrix_width(), theme.get_matrix_height()))
+
         if SHOW_GRID:
             for j in range(1, XMAX):
-                pygame.draw.line(screen, (80, 80, 80), [IMGX*j+self.srcx, 0+self.srcy], [IMGX*j+self.srcx, IMGY * YMAX+self.srcy])
+                pygame.draw.line(screen, theme.gridColor, [IMGX*j+self.srcx, 0+self.srcy], [IMGX*j+self.srcx, IMGY * YMAX+self.srcy])
             for j in range(1, YMAX):
-                pygame.draw.line(screen, (80, 80, 80), [0+self.srcx, IMGY*j+self.srcy], [IMGX * XMAX+self.srcx, IMGY * j+self.srcy])
+                pygame.draw.line(screen, theme.gridColor, [0+self.srcx, IMGY*j+self.srcy], [IMGX * XMAX+self.srcx, IMGY * j+self.srcy])
 
         for j in range(YMAX):
             for i in range(XMAX):
