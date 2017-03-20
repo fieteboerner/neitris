@@ -21,6 +21,8 @@ import struct
 import sys, time, pygame
 from select import select
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
+from socket import error as SocketError
+import errno
 import neitris_utils
 import neitris_cfg
 
@@ -276,11 +278,11 @@ def ServeIt():
                                 for cli in clients:
                                     if clients[cli][0] == dst:
                                         outbuf[cli].append(msgout)
-                                
-                                    
-                                                
 
-                     
+                except SocketError as e:
+                    if e.errno != errno.ECONNRESET:
+                        raise
+                    pass
                 except:
                     raise
         # Get ready to write

@@ -126,7 +126,7 @@ def input(events, matrix):
     curlines = 0
 
     for event in events:
-        if event.type == QUIT:
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == KEY_QUIT):
             sys.exit(0)
         elif  event.type == KEYDOWN and event.key == KEY_START \
                  and State == "Idle":
