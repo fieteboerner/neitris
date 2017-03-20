@@ -14,8 +14,8 @@ class BaseTheme:
     brickWidth = IMGX
 
     # Style
-    backgroundColor = (0, 0, 0)
-    matrixBackgroundColor = (20, 20, 20)
+    bgColor = (0, 0, 0)
+    matrixBgColor = (0, 0, 0)
     textColor = (255, 255, 255)
     gridColor = (80, 80, 80)
 

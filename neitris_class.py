@@ -358,7 +358,7 @@ class Matrix:
         else:
             drawset = bricks
 
-        pygame.draw.rect(screen, theme.matrixBackgroundColor, (self.srcx, self.srcy, theme.get_matrix_width(), theme.get_matrix_height()))
+        pygame.draw.rect(screen, theme.matrixBgColor, (self.srcx, self.srcy, theme.get_matrix_width(), theme.get_matrix_height()))
 
         if SHOW_GRID:
             for j in range(1, XMAX):
@@ -419,7 +419,7 @@ class Matrix:
 
         # Create player's name
         font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
-        text = font.render("%s" % (self.name), 1, theme.textColor, theme.backgroundColor)
+        text = font.render("%s" % (self.name), 1, theme.textColor, theme.bgColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
@@ -431,7 +431,7 @@ class Matrix:
         else:
             str = "Victim: %s" % (players[self.victim].name)
         
-        text = font.render(str, 1, theme.textColor, theme.backgroundColor)
+        text = font.render(str, 1, theme.textColor, theme.bgColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0
@@ -441,7 +441,7 @@ class Matrix:
         font = pygame.font.Font(None, int(20 * SCALE_FACTOR))
         str = "Wins: %d    Speed: %d" % (self.victories, 10 - self.speedidx)
             
-        text = font.render(str, 1, theme.textColor, theme.backgroundColor)
+        text = font.render(str, 1, theme.textColor, theme.bgColor)
         textpos = text.get_rect()
         textpos.centerx = 0
         textpos.centery = 0

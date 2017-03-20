@@ -302,10 +302,10 @@ def ProcessMsg(rqueue):
             if data > 0:
                 font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
 
-                text = font.render("%i" % data, 1, theme.textColor, theme.backgroundColor)
+                text = font.render("%i" % data, 1, theme.textColor, theme.bgColor)
                 textpos = text.get_rect()
                 textsurf = pygame.Surface(screen.get_size())
-                textsurf.fill(theme.backgroundColor)
+                textsurf.fill(theme.bgColor)
                 textpos.centerx = textsurf.get_rect().centerx
                 textpos.centery = 270
 
@@ -436,14 +436,14 @@ def neitris_main_loop(rq, wq):
     screen = pygame.display.get_surface()
     background = pygame.Surface(screen.get_size())
     background = background.convert()
-    background.fill(theme.backgroundColor)
+    background.fill(theme.bgColor)
 
     font = pygame.font.Font(None, int(25 * SCALE_FACTOR))
 
-    text = font.render("Press START to start game", 1, theme.textColor, theme.backgroundColor)
+    text = font.render("Press START to start game", 1, theme.textColor, theme.bgColor)
     textpos = text.get_rect()
     textsurf = pygame.Surface(screen.get_size())
-    textsurf.fill(theme.backgroundColor)
+    textsurf.fill(theme.bgColor)
     textpos.centerx = textsurf.get_rect().centerx
     textpos.centery = 270
 
