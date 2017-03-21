@@ -20,6 +20,7 @@
 from pygame.locals import *
 
 KEY_START = K_1
+KEY_QUIT = K_ESCAPE
 KEY_DOWN = K_KP2
 KEY_LEFT = K_KP4
 KEY_RIGHT = K_KP6
