@@ -60,4 +60,4 @@ class BaseTheme:
         return XMAX * self.brickWidth
 
     def get_window_width(self):
-        return self.get_matrix_width() + 6 * self.brickWidth
+        return self.get_matrix_width() + 7 * self.brickWidth

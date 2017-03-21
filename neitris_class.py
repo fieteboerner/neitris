@@ -347,7 +347,7 @@ class Matrix:
             print str
 
     def DrawMatrix(self, screen, bricks, dots,  players, background):
-        screen.blit(background, (self.srcx, 0))            
+        screen.blit(background, (self.srcx, 0))
         if(self.curshape.x != -1):
             self.PutShape_color(self.curshape.y, self.curshape.x,
                                 self.curshape.shape, self.curshape.rotation);
@@ -384,13 +384,28 @@ class Matrix:
         if self.curshape.nextshape == -1:
             return
 
+        # draw forecast
+        pygame.draw.rect(screen, theme.matrixBgColor,
+            (self.srcx + theme.get_matrix_width(), self.srcy, theme.brickWidth * 6, theme.brickWidth * 7))
+        for i in range(0, 6):
+            screen.blit(drawset[theme.borderBrick - 1],
+                (self.srcx + theme.get_matrix_width() + (i * theme.brickWidth), self.srcy))
+            screen.blit(drawset[theme.borderBrick - 1],
+                (self.srcx + theme.get_matrix_width() + (i * theme.brickWidth), self.srcy + theme.brickWidth * 6))
+
+        for i in range(1, 6):
+            screen.blit(drawset[theme.borderBrick - 1],
+                        (self.srcx + theme.get_matrix_width() + (5 * theme.brickWidth), self.srcy + theme.brickWidth * i))
+
         if CRYSTALBALL not in self.powerups_active:
+            xoffset = (5 - shapes[self.curshape.nextshape].rots[0].width) / 2.0
+            yoffset = (5 - shapes[self.curshape.nextshape].rots[0].height) / 2.0
             for j in range(shapes[self.curshape.nextshape].rots[0].height):
                 for i in range(shapes[self.curshape.nextshape].rots[0].width):
                     if(shapes[self.curshape.nextshape].rots[0].rotmat[j][i]):
-                        screen.blit(bricks[shapes[self.curshape.nextshape
-                            ].rots[0].rotmat[j][i]-1], ((13+i)*IMGX+self.srcx,
-                            (j+1)*IMGY+self.srcy))
+                        screen.blit(bricks[shapes[self.curshape.nextshape].rots[0].rotmat[j][i]-1],
+                            (self.srcx + theme.get_matrix_width() + (xoffset * theme.brickWidth) + (i * theme.brickWidth),
+                             self.srcy + (yoffset * theme.brickWidth) + ((j + 1) * theme.brickWidth)))
 
 
         # draw powerups
@@ -430,7 +445,7 @@ class Matrix:
             str = "Victim: Nobody"
         else:
             str = "Victim: %s" % (players[self.victim].name)
-        
+
         text = font.render(str, 1, theme.textColor, theme.bgColor)
         textpos = text.get_rect()
         textpos.centerx = 0
@@ -440,7 +455,7 @@ class Matrix:
         # Display won games and speed
         font = pygame.font.Font(None, int(20 * SCALE_FACTOR))
         str = "Wins: %d    Speed: %d" % (self.victories, 10 - self.speedidx)
-            
+
         text = font.render(str, 1, theme.textColor, theme.bgColor)
         textpos = text.get_rect()
         textpos.centerx = 0
