@@ -146,13 +146,13 @@ class Matrix:
         else:
             self.Move(0, -1);
         
-	
+
     def MoveRight(self):
         if REVERSEKEYS in self.powerups_active:
             self.Move(0, -1);
         else:
             self.Move(0, 1);
-	
+
     def MoveDown(self):
         return self.Move(1,0);
 
@@ -852,6 +852,8 @@ class Matrix:
                 # if a block will be set to a falling brick -> stop brick
                 if self.matrix[i][j] == FALLING and self.matrix[i-lines][j] > 0:
                     self.get_newshape = 1
+                    print 'newshape = 1 in  PutRandomLines I:'
+                    self.PrintMatrix()
                 if self.matrix[i][j] != FALLING and self.matrix[i-lines][j] != FALLING:
                     self.matrix[i-lines][j] = self.matrix[i][j]
         # fill bottom lines
