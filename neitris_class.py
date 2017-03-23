@@ -362,9 +362,9 @@ class Matrix:
 
         if SHOW_GRID:
             for j in range(1, XMAX):
-                pygame.draw.line(screen, theme.gridColor, [IMGX*j+self.srcx, 0+self.srcy], [IMGX*j+self.srcx, IMGY * YMAX+self.srcy])
+                pygame.draw.line(screen, theme.gridColor, [IMGX*j+self.srcx, 0+self.srcy], [IMGX*j+self.srcx , (IMGY * YMAX+self.srcy) - 1])
             for j in range(1, YMAX):
-                pygame.draw.line(screen, theme.gridColor, [0+self.srcx, IMGY*j+self.srcy], [IMGX * XMAX+self.srcx, IMGY * j+self.srcy])
+                pygame.draw.line(screen, theme.gridColor, [0+self.srcx, IMGY*j+self.srcy], [(IMGX * XMAX+self.srcx) - 1, IMGY * j+self.srcy])
 
         for j in range(YMAX):
             for i in range(XMAX):
