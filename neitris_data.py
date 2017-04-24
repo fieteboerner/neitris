@@ -34,7 +34,7 @@ class Powerup:
 
 MAX_SHAPES = 7
 XMAX = 12
-YMAX = 31
+YMAX = 21
 
 IMGX = int(15 * SCALE_FACTOR)
 IMGY = int(15 * SCALE_FACTOR)
